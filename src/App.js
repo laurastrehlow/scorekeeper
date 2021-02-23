@@ -1,25 +1,58 @@
-import logo from './logo.svg';
+import { useState } from 'react'
 import './App.css';
+import PlayerForm from './PlayerForm/PlayerForm'
+import Player from './Player/Player'
+import Button from './Button/Button'
 
 function App() {
+  const [players, setPlayers] = useState([])
+
+  function handleAddPlayer(name) {
+    setPlayers(oldPlayers => [...oldPlayers, { name, score: 0 }])
+  }
+
+  function resetAll() {
+    setPlayers([])
+  }
+
+  function resetScore() {
+    setPlayers(players.map(player => ({ ...player, score: 0 })))
+  }
+
+  function handlePlus(index) {
+    const currentPlayer = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...currentPlayer, score: currentPlayer.score + 1 },
+      ...players.slice(index + 1),
+    ])
+  }
+
+  function handleMinus(index) {
+    const currentPlayer = players[index]
+    setPlayers([
+      ...players.slice(0, index),
+      { ...currentPlayer, score: currentPlayer.score - 1 },
+      ...players.slice(index + 1),
+    ])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PlayerForm onAddPlayer={handleAddPlayer} />
+      {players.map((player, index) => (
+        <Player
+          name={player.name}
+          score={player.score}
+          onPlus={() => handlePlus(index)}
+          onMinus={() => handleMinus(index)}
+        />
+      ))}
+
+      <Button text="Reset scores" onClick={resetScore}></Button>
+      <Button text="Reset all" onClick={resetAll}></Button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

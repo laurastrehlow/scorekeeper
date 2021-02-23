@@ -1,0 +1,7 @@
+.Button {
+    padding: 5px;
+    background:linear-gradient(grey, darkgrey);
+    border-radius: 12px;
+    margin-top: 10px;
+    width: 100%;
+  }
