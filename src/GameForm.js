@@ -5,7 +5,7 @@ import styled from 'styled-components/macro'
 
 export default function GameForm({ onCreateGame }) {
   return (
-    <Form className="GameForm" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <Input
         name="nameOfGame"
         labelText="Name of game"
@@ -35,7 +35,6 @@ export default function GameForm({ onCreateGame }) {
 }
 
 const Form = styled.form`
-.GameForm {
     display: grid;
     gap: 10px;
-  }`
+  `
