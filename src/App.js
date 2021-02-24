@@ -33,7 +33,7 @@ export default function App() {
               onPlus={() => handlePlus(index)}
               onMinus={() => handleMinus(index)}
             />
-          ))}
+          ))}<br/>
           <Button onClick={resetScores}>Reset scores</Button>
           <Button onClick={endGame}>End game</Button>
         </div>

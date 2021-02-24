@@ -13,8 +13,12 @@ export default function Input({ labelText, placeholder, name }) {
 const Label = styled.label`
     display: grid;
     gap: 4px;
+    font-style: strong;
+    text-align: center;
   }`
 
   const InputAgain = styled.input`
-   border: 2px solid #bbb;
+   border: 1px solid darkslategrey;
+   font-size: 12px;
+   padding: 5px;
 `
