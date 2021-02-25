@@ -1,93 +1,79 @@
 import { useState } from 'react'
 import styled from 'styled-components/macro'
-import Button from './Button'
-import GameForm from './GameForm'
-import Header from './Header'
-import HistoryEntry from './HistoryEntry'
+import CreatePage from './CreatePage'
+import GamePage from './GamePage'
+import HistoryPage from './HistoryPage'
 import Navigation from './Navigation'
-import Player from './Player'
+import { Route, Switch, useHistory } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function App() {
   const [players, setPlayers] = useState([])
   const [nameOfGame, setNameOfGame] = useState('')
-  const [currentPage, setCurrentPage] = useState('play')
+  const { push } = useHistory()
   const [history, setHistory] = useState([])
 
   return (
     <AppLayout>
-      {currentPage === 'play' && (
-        <div>
-          <GameForm onCreateGame={createGame} />
-        </div>
-      )}
+    <Switch>
+      <Route exact path="/">
+        <CreatePage onCreateGame={createGame} />
+      </Route>
+      <Route path="/game">
+        <GamePage
+          nameOfGame={nameOfGame}
+          players={players}
+          onMinus={handleMinus}
+          onPlus={handlePlus}
+          onReset={resetScores}
+          onEnd={endGame}
+        />
+      </Route>
+      <Route path="/history">
+        <HistoryPage history={history} />
+      </Route>
+    </Switch>
+    <Route exact path={['/', '/history']}>
+      <Navigation />
+    </Route>
+  </AppLayout>
+)
 
-      {currentPage === 'game' && (
-        <div>
-          <Header>{nameOfGame}</Header>
-          {players.map(({ name, score }, index) => (
-            <Player
-              key={name}
-              name={name}
-              score={score}
-              onPlus={() => handlePlus(index)}
-              onMinus={() => handleMinus(index)}
-            />
-          ))}<br/>
-          <Button onClick={resetScores}>Reset scores</Button>
-          <Button onClick={endGame}>End game</Button>
-        </div>
-      )}
 
-{currentPage === 'history' && (
-        <HistoryWrapper>
-          {history.map(({ nameOfGame, players, id }) => (
-            <HistoryEntry key={id} nameOfGame={nameOfGame} players={players} />
-          ))}
-        </HistoryWrapper>
-      )}
+function createGame({ nameOfGame, playerNames }) {
+  setNameOfGame(nameOfGame)
+  setPlayers(playerNames.map(name => ({ name, score: 0 })))
+  push('/game')
+}
 
-      {(currentPage === 'play' || currentPage === 'history') && (
-        <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-      )}
-    </AppLayout>
-  )
+function endGame() {
+  setHistory([{ players, nameOfGame, id: uuidv4() }, ...history])
+  setPlayers([])
+  setNameOfGame('')
+  push('/history')
+}
 
- 
-  function createGame({ nameOfGame, playerNames }) {
-    setNameOfGame(nameOfGame)
-    setPlayers(playerNames.map(name => ({ name, score: 0 })))
-    setCurrentPage('game')
-  }
+function resetScores() {
+  setPlayers(players.map(player => ({ ...player, score: 0 })))
+}
 
-  function endGame() {
-    setHistory([{ players, nameOfGame, id: uuidv4() }, ...history])
-    setPlayers([])
-    setNameOfGame('')
-    setCurrentPage('play')
-  }
+function handlePlus(index) {
+  const currentPlayer = players[index]
+  setPlayers([
+    ...players.slice(0, index),
+    { ...currentPlayer, score: currentPlayer.score + 1 },
+    ...players.slice(index + 1),
+  ])
+}
 
-  function resetScores() {
-    setPlayers(players.map(player => ({ ...player, score: 0 })))
-  }
-
-  function handlePlus(index) {
-    const currentPlayer = players[index]
-    setPlayers([
-      ...players.slice(0, index),
-      { ...currentPlayer, score: currentPlayer.score + 1 },
-      ...players.slice(index + 1),
-    ])
-  }
-
-  function handleMinus(index) {
-    const currentPlayer = players[index]
-    setPlayers([
-      ...players.slice(0, index),
-      { ...currentPlayer, score: currentPlayer.score - 1 },
-      ...players.slice(index + 1),
-    ])
-  }
+function handleMinus(index) {
+  const currentPlayer = players[index]
+  setPlayers([
+    ...players.slice(0, index),
+    { ...currentPlayer, score: currentPlayer.score - 1 },
+    ...players.slice(index + 1),
+  ])
+}
 }
 
 const AppLayout = styled.div`
