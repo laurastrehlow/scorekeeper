@@ -7,4 +7,13 @@ export default styled.button`
   width: 100%;
   padding: 5px;
   box-shadow: 0 4px 8px darkgrey;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
+  color: inherit;
+
+  &.active {
+    background-color: teal;
+    color: white;
+  }
 `
