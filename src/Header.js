@@ -6,6 +6,6 @@ export default function Header({ text }) {
 }
 
 const Heading = styled.header`
-    padding: 12px;
-    text-align: center;
-  `
+  padding: 12px;
+  text-align: center;
+`

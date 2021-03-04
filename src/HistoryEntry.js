@@ -16,11 +16,11 @@ export default function HistoryEntry({ nameOfGame, players }) {
 }
 
 const History = styled.section`
-    display: grid;
-     gap: 10px;
-  `
+  display: grid;
+  gap: 10px;
+`
 
-  const Player = styled.div`
-    display: flex;
-    justify-content: space-between;
+const Player = styled.div`
+  display: flex;
+  justify-content: space-between;
 `

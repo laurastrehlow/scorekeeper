@@ -17,8 +17,8 @@ const Label = styled.label`
     text-align: center;
   }`
 
-  const InputAgain = styled.input`
-   border: 1px solid darkslategrey;
-   font-size: 12px;
-   padding: 5px;
+const InputAgain = styled.input`
+  border: 1px solid darkslategrey;
+  font-size: 12px;
+  padding: 5px;
 `

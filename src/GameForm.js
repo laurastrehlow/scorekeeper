@@ -16,8 +16,8 @@ export default function GameForm({ onCreateGame }) {
         labelText="Player names"
         placeholder="e.g. John Doe, Jane Doe"
       />
-        <Button>Create game</Button>
-     </Form>
+      <Button>Create game</Button>
+    </Form>
   )
 
   function handleSubmit(event) {
@@ -35,6 +35,6 @@ export default function GameForm({ onCreateGame }) {
 }
 
 const Form = styled.form`
-    display: grid;
-    gap: 10px;
-  `
+  display: grid;
+  gap: 10px;
+`

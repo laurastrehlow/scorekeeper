@@ -2,7 +2,7 @@ import styled from 'styled-components/macro'
 import Button from './Button'
 
 const MAX_HUE_VALUE = 120
-const MIN_HUE_VALUE = 0 
+const MIN_HUE_VALUE = 0
 
 export default function Player({ name, score, onMinus, onPlus }) {
   const maxHue = Math.min(score * 10, MAX_HUE_VALUE)

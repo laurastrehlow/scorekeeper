@@ -21,8 +21,9 @@ export default function GamePage({
           onPlus={() => onPlus(index)}
           onMinus={() => onMinus(index)}
         />
-      ))}<br/>
-      <Button onClick={onReset}>Reset scores</Button><br/>
+      ))}
+      <br />
+      <Button onClick={onReset}>Reset scores</Button>
       <Button onClick={onEnd}>End game</Button>
     </div>
   )
